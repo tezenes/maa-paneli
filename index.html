@@ -3,461 +3,508 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DPÜ Spor Kulübü — Yönetim Paneli</title>
+<title>DPÜ Spor Kulübü – Yönetim Paneli</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
 
+/* HEADER */
 .header{background:linear-gradient(135deg,#0d1b3e,#1a3a6e);color:white;padding:1rem 2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 2px 12px rgba(0,0,0,.35)}
-.logo{width:46px;height:46px;background:#c9a227;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;flex-shrink:0}
-.header h1{font-size:1.2rem;font-weight:800}
-.header .sub{font-size:.78rem;opacity:.7;margin-top:.1rem}
+.header h1{font-size:1.2rem;font-weight:800;letter-spacing:.5px}
+.header .sub{font-size:.78rem;opacity:.7;margin-top:.15rem}
+.logo{width:44px;height:44px;background:#c9a227;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
 
+/* TABS */
 .tabs{background:white;border-bottom:2px solid #e0e0e0;display:flex;padding:0 2rem;overflow-x:auto}
-.tab{padding:1rem 1.2rem;border:none;background:transparent;font-size:.88rem;font-weight:700;color:#888;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:.2s}
-.tab.active{color:#0d1b3e;border-bottom-color:#c9a227}
-.tab:hover:not(.active){color:#0d1b3e}
-.tab-content{display:none;padding:2rem;max-width:1300px;margin:0 auto}
-.tab-content.active{display:block}
+.tab{padding:.75rem 1.4rem;cursor:pointer;font-weight:600;font-size:.88rem;border-bottom:3px solid transparent;margin-bottom:-2px;color:#777;transition:all .2s;white-space:nowrap}
+.tab.active{color:#1a3a6e;border-bottom-color:#c9a227}
+.tab:hover:not(.active){color:#1a3a6e}
 
-/* STATS */
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1rem;margin-bottom:1.5rem}
-.stat-card{background:white;border-radius:16px;padding:1.3rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border-left:4px solid #c9a227}
-.slbl{font-size:.7rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem}
-.sval{font-size:1.6rem;font-weight:900;color:#0d1b3e}
-.ssub{font-size:.73rem;color:#aaa;margin-top:.2rem}
+/* MAIN */
+.main{padding:1.5rem 2rem;max-width:1500px;margin:0 auto}
 
-/* BRANCH MINI CARDS */
-.branch-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-.bcard-mini{background:white;border-radius:14px;padding:1.2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid #ccc}
-.bcard-mini .bname{font-weight:800;color:#0d1b3e;margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem}
-.binfo-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.82rem}
-.binfo-item .lbl{color:#888;font-size:.72rem}
-.binfo-item .val{font-weight:700;margin-top:.1rem}
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
 
-/* YOKLAMA */
-.period-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
-.period-bar h2{font-size:1.2rem;font-weight:800;color:#0d1b3e}
-.selects{display:flex;gap:.5rem}
-.selects select{padding:.4rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-family:inherit;font-weight:600;font-size:.88rem}
-.selects select:focus{outline:none;border-color:#0d1b3e}
+/* CARD */
+.card{background:white;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:1rem}
 
-.branch-section{background:white;border-radius:16px;padding:1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:1.2rem}
-.bsec-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:2px solid #f0f0f0}
-.bsec-head .emoji{font-size:1.7rem}
-.bsec-head .bname{font-size:1.05rem;font-weight:800;color:#0d1b3e}
-.coach-block{margin-bottom:1.2rem}
-.coach-lbl{font-weight:700;font-size:.88rem;color:#0d1b3e;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
-.coach-lbl .days-count{font-weight:400;color:#888;font-size:.82rem}
-.day-grid{display:flex;flex-wrap:wrap;gap:.35rem}
-.day-btn{width:34px;height:34px;border-radius:7px;border:2px solid #e0e0e0;background:white;font-size:.78rem;font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;color:#555}
-.day-btn.on{background:#22c55e;border-color:#22c55e;color:white}
-.day-btn:hover:not(.on){border-color:#0d1b3e;background:#f0f4ff}
+/* BUTTONS */
+.btn{padding:.5rem 1rem;border:none;border-radius:8px;cursor:pointer;font-size:.84rem;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-primary{background:#1a3a6e;color:white}.btn-primary:hover{background:#0d1b3e}
+.btn-gold{background:#c9a227;color:#1a1a2e}.btn-gold:hover{background:#b8911f}
+.btn-danger{background:#e53e3e;color:white}.btn-danger:hover{background:#c53030}
+.btn-outline{background:transparent;border:2px solid #1a3a6e;color:#1a3a6e}.btn-outline:hover{background:#1a3a6e;color:white}
+.btn-sm{padding:.28rem .6rem;font-size:.74rem}
 
-.yok-actions{display:flex;gap:.5rem;flex-wrap:wrap}
-.btn{padding:.5rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:.18s;display:inline-flex;align-items:center;gap:.3rem}
-.btn:hover{filter:brightness(.92)}
-.btn-outline{background:transparent;border:2px solid #0d1b3e;color:#0d1b3e}
-.btn-danger{background:#ef4444;color:white}
-.btn-gold{background:#c9a227;color:#1a1a2e}
-.btn-sm{padding:.3rem .7rem;font-size:.78rem}
+/* SETUP */
+.branch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.bcard{background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.09);overflow:hidden}
+.bcard-head{padding:.9rem 1.1rem;color:white;display:flex;align-items:center;justify-content:space-between}
+.bcard-head span{font-size:1rem;font-weight:700}
+.bcard-body{padding:.9rem 1.1rem}
+.coach-row{display:flex;align-items:center;gap:.4rem;padding:.38rem 0;border-bottom:1px solid #f0f0f0}
+.coach-row:last-child{border-bottom:none}
+.coach-row .cn{flex:1;font-size:.83rem;font-weight:500}
+.wbadge{background:#e8f0fe;color:#1a3a6e;border-radius:20px;padding:.15rem .55rem;font-size:.72rem;font-weight:800}
 
-/* RAPOR */
-.rpt-table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.rpt-table thead{background:linear-gradient(135deg,#0d1b3e,#1a3a6e)}
-.rpt-table thead th{padding:.9rem 1rem;color:white;font-size:.76rem;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:.5px}
-.rpt-table tbody tr{border-bottom:1px solid #f0f0f0;transition:.15s}
-.rpt-table tbody tr:hover{background:#f8f9fa}
-.rpt-table tbody td{padding:.85rem 1rem;font-size:.86rem}
-.rpt-table tfoot td{padding:.9rem 1rem;font-weight:800;background:#f0f2f5;font-size:.9rem}
-.branch-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:6px;font-size:.75rem;font-weight:700}
-.pay-cell{font-weight:800;color:#16a34a}
+/* ATTENDANCE */
+.month-nav{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.month-disp{font-size:1.05rem;font-weight:800;min-width:170px;text-align:center;color:#1a3a6e}
+.btabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.btab{padding:.38rem .85rem;border-radius:20px;cursor:pointer;font-size:.78rem;font-weight:700;color:white;opacity:.65;transition:all .2s;border:2px solid transparent}
+.btab.sel{opacity:1;transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.att-wrap{overflow-x:auto;border-radius:8px}
+.att-table{border-collapse:collapse;font-size:.77rem;min-width:100%}
+.att-table th{background:#1a3a6e;color:white;padding:.35rem .25rem;text-align:center;font-weight:600;min-width:28px;white-space:nowrap}
+.att-table th.cc{min-width:170px;text-align:left;padding-left:.75rem;position:sticky;left:0;z-index:2;background:#1a3a6e}
+.att-table th.kc{min-width:36px}
+.att-table td{border:1px solid #eee;padding:2px 3px;text-align:center;vertical-align:middle}
+.att-table td.coach-cell{text-align:left;padding-left:.75rem;font-weight:600;background:#f8f9fa;position:sticky;left:0;z-index:1;min-width:170px;font-size:.8rem}
+.att-table td.wt-cell{background:#f0f2f5;font-weight:800;color:#1a3a6e;min-width:36px}
+.att-table td.tot-cell{background:#e8f4f8;font-weight:800;color:#0077b6;min-width:60px}
+.att-table .we-hd{background:#2a5080}
+.att-cell{width:26px;height:26px;border-radius:5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .12s;background:#f0f0f0;color:transparent}
+.att-cell:hover{background:#bee3f8}
+.att-cell.ok{background:#38a169;color:white}
+.att-cell.we{background:#e8e8e8}
+.att-cell.ok.we{background:#68d391;color:white}
+.att-table tr:nth-child(even) td{background:#fafafa}
+.att-table tr:nth-child(even) td.coach-cell{background:#f0f2f5}
 
-/* GELİR INPUT */
-.inc-bar{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:.8rem 1rem;margin-bottom:1.2rem}
-.inc-bar-inner{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
-.inc-bar label{font-size:.82rem;font-weight:800;color:#92400e;white-space:nowrap}
-.inc-bar input{padding:.45rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.9rem;font-family:inherit;width:160px}
-.inc-bar input:focus{outline:none;border-color:#c9a227}
-.inc-summary{display:flex;gap:1.5rem;margin-top:.6rem;font-size:.82rem;flex-wrap:wrap}
-.inc-summary span{font-weight:700}
-.inc-summary .lbl{font-weight:400;color:#888}
+/* REPORT */
+.rpt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:1rem}
+.sum-bar{display:flex;gap:.75rem;margin-bottom:.9rem}
+.sum-box{flex:1;background:#f8f9fa;border-radius:8px;padding:.65rem;text-align:center}
+.sum-box .slbl{font-size:.68rem;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.sum-box .sval{font-size:1.1rem;font-weight:900;margin-top:.15rem}
+.rpt-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.rpt-table th{background:#f0f2f5;padding:.45rem .5rem;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:#666;border-bottom:2px solid #e0e0e0}
+.rpt-table td{padding:.45rem .5rem;border-bottom:1px solid #f0f0f0}
+.rpt-table .tot-row td{font-weight:800;background:#f8f9fa;border-top:2px solid #e0e0e0}
+.pay{font-weight:800;color:#38a169}
+.zero{color:#e53e3e;font-weight:700}
 
-/* ANTRENÖR ÖZETİ */
-.coach-table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.coach-table thead{background:linear-gradient(135deg,#0d1b3e,#1a3a6e)}
-.coach-table thead th{padding:.9rem 1rem;color:white;font-size:.76rem;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:.5px}
-.coach-table tbody tr{border-bottom:1px solid #f0f0f0;transition:.15s}
-.coach-table tbody tr:hover{background:#f8f9fa}
-.coach-table tbody td{padding:.9rem 1rem;font-size:.86rem}
+/* INCOME INPUT */
+.inc-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem;padding:.6rem;background:#fffbe6;border-radius:8px;border:1px solid #f6d860}
+.inc-row label{font-size:.8rem;font-weight:700;white-space:nowrap;color:#856404}
+.inc-row input{flex:1;padding:.42rem .7rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.88rem}
+.inc-row input:focus{outline:none;border-color:#c9a227}
 
-/* TOAST */
-#toast{position:fixed;bottom:1.8rem;right:1.8rem;background:#0d1b3e;color:white;padding:.75rem 1.4rem;border-radius:12px;font-size:.86rem;font-weight:700;opacity:0;transform:translateY(14px);transition:.3s;z-index:9999;pointer-events:none}
-#toast.show{opacity:1;transform:translateY(0)}
+/* MODAL */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center}
+#overlay.show{display:flex}
+#mbox{background:white;border-radius:16px;padding:1.5rem;width:420px;max-width:92vw;max-height:90vh;overflow-y:auto}
+#mbox h3{margin-bottom:1rem;color:#1a3a6e;font-size:1.05rem}
+.mfield{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.6rem}
+.mfield label{font-size:.78rem;color:#666;font-weight:600}
+.mfield input,.mfield select{padding:.5rem .75rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.88rem}
+.mfield input:focus,.mfield select:focus{outline:none;border-color:#1a3a6e}
+.mbtns{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem}
 
-/* LOADING */
-#loadingOverlay{position:fixed;inset:0;background:rgba(13,27,62,.85);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
-#loadingOverlay.show{display:flex}
-.spinner{width:46px;height:46px;border:4px solid rgba(255,255,255,.2);border-top-color:#c9a227;border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin-txt{color:white;font-size:.9rem;font-weight:600}
+/* PRINT */
+.print-btn{float:right}
+@media print{
+  .tabs,.btn,.month-nav,.btabs,.inc-row,.print-btn,.header .logo{display:none!important}
+  .header{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .rpt-table{font-size:.75rem}
+}
 
-@media(max-width:768px){
-  .tab-content{padding:1rem}
-  .stat-grid{grid-template-columns:1fr 1fr}
-  .header{padding:.8rem 1rem}
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem;color:#aaa}
+.empty-ico{font-size:2.5rem;margin-bottom:.5rem}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .main{padding:1rem}
   .tabs{padding:0 .5rem}
-  .tab{padding:.75rem .8rem;font-size:.8rem}
+  .tab{padding:.6rem .8rem;font-size:.8rem}
+  .header{padding:.8rem 1rem}
+  .header h1{font-size:1rem}
 }
 </style>
 </head>
 <body>
 
-<div id="loadingOverlay"><div class="spinner"></div><div class="spin-txt" id="spinTxt">Yükleniyor...</div></div>
-
 <div class="header">
-  <div class="logo">DPÜ</div>
-  <div><h1>DPÜ Spor Kulübü</h1><div class="sub">Yönetim Paneli</div></div>
+  <div class="logo">⚡</div>
+  <div>
+    <h1>DPÜ Spor Kulübü – Yönetim Paneli</h1>
+    <div class="sub">Yoklama & Ödeme Takip Sistemi</div>
+  </div>
 </div>
 
-<div class="tabs" id="tabBar">
-  <button class="tab active" onclick="showTab(this,'dashboard')">📊 Genel Bakış</button>
-  <button class="tab" onclick="showTab(this,'yoklama')">📋 Yoklama</button>
-  <button class="tab" onclick="showTab(this,'rapor')">💰 Ödeme Raporu</button>
-  <button class="tab" onclick="showTab(this,'antrenorler')">👥 Antrenör Özeti</button>
+<div class="tabs">
+  <div class="tab active" onclick="goTab('kurulum')">⚙️ Branş & Antrenörler</div>
+  <div class="tab" onclick="goTab('yoklama')">✅ Aylık Yoklama</div>
+  <div class="tab" onclick="goTab('rapor')">💰 Ödeme Raporu</div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="tab-content active" id="tab-dashboard">
-  <div class="period-bar">
-    <div><h2>Genel Bakış</h2><div style="font-size:.82rem;color:#888;margin-top:.2rem" id="dashPeriod"></div></div>
-    <div class="selects">
-      <select id="selYear" onchange="changeDate()"></select>
-      <select id="selMonth" onchange="changeDate()"></select>
+<div class="main">
+
+  <!-- ===== KURULUM ===== -->
+  <div class="panel active" id="p-kurulum">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+      <div>
+        <h2 style="font-size:1.05rem;color:#1a3a6e;font-weight:800">Branşlar & Antrenörler</h2>
+        <p style="font-size:.78rem;color:#888;margin-top:.2rem">Katsayı: Baş Antrenör = 2, Antrenör = 1 (değiştirilebilir)</p>
+      </div>
+      <button class="btn btn-gold" onclick="mAddBranch()">+ Yeni Branş</button>
+    </div>
+    <div class="branch-grid" id="setup-grid"></div>
+  </div>
+
+  <!-- ===== YOKLAMA ===== -->
+  <div class="panel" id="p-yoklama">
+    <div class="card">
+      <div class="month-nav">
+        <button class="btn btn-outline btn-sm" onclick="mvMonth(-1)">◀ Önceki</button>
+        <span class="month-disp" id="att-month-lbl"></span>
+        <button class="btn btn-outline btn-sm" onclick="mvMonth(1)">Sonraki ▶</button>
+      </div>
+      <div class="btabs" id="att-btabs"></div>
+    </div>
+    <div class="card" style="padding:.75rem">
+      <div class="att-wrap" id="att-wrap"></div>
     </div>
   </div>
-  <div class="stat-grid" id="dashStats"></div>
-  <div class="branch-cards" id="dashCards"></div>
-</div>
 
-<!-- YOKLAMA -->
-<div class="tab-content" id="tab-yoklama">
-  <div class="period-bar">
-    <h2>Aylık Yoklama</h2>
-    <div class="yok-actions">
-      <button class="btn btn-outline btn-sm" onclick="markAll(true)">✅ Tümünü İşaretle</button>
-      <button class="btn btn-outline btn-sm" onclick="markAll(false)">☐ Temizle</button>
-      <button class="btn btn-danger btn-sm" onclick="resetMonth()">🗑 Ayı Sıfırla</button>
+  <!-- ===== RAPOR ===== -->
+  <div class="panel" id="p-rapor">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="mvRptMonth(-1)">◀</button>
+      <span id="rpt-month-lbl" style="font-size:1.05rem;font-weight:800;min-width:170px;text-align:center;color:#1a3a6e"></span>
+      <button class="btn btn-outline btn-sm" onclick="mvRptMonth(1)">▶</button>
+      <button class="btn btn-outline btn-sm print-btn" onclick="window.print()" style="margin-left:auto">🖨️ Yazdır</button>
     </div>
+    <div class="rpt-grid" id="rpt-grid"></div>
   </div>
-  <div id="yoklamaContent"></div>
+
 </div>
 
-<!-- RAPOR -->
-<div class="tab-content" id="tab-rapor">
-  <div class="period-bar">
-    <h2>Ödeme Raporu</h2>
-    <button class="btn btn-gold btn-sm" onclick="exportCSV()">📥 CSV İndir</button>
-  </div>
-  <div id="raporContent"></div>
+<!-- MODAL -->
+<div id="overlay" onclick="if(event.target===this)hideM()">
+  <div id="mbox"></div>
 </div>
-
-<!-- ANTRENÖR ÖZETİ -->
-<div class="tab-content" id="tab-antrenorler">
-  <div class="period-bar"><h2>Antrenör Özeti</h2></div>
-  <div id="antrenorContent"></div>
-</div>
-
-<div id="toast"></div>
 
 <script>
-// ── VERİ ──
-const SK = 'dpusk_v4';
-const MONTHS = ['','Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+// ============================================================
+// STATE
+// ============================================================
+const SK = 'dpu_panel_v2';
 
-const DEFAULT_BRANCHES = [
-  {id:'yuzme',     name:'Yüzme',      emoji:'🏊', color:'#0077b6',
-   coaches:[{id:'y1',name:'Gizem Yerlikaya',weight:2}], dailyRate:750},
-  {id:'voleybol',  name:'Voleybol',   emoji:'🏐', color:'#1a3a6e',
-   coaches:[{id:'v1',name:'Gizem Yerlikaya',weight:2}], dailyRate:750},
-  {id:'basketbol', name:'Basketbol',  emoji:'🏀', color:'#c8102e',
-   coaches:[{id:'b1',name:'Hamdi',weight:2}], dailyRate:750},
-  {id:'tenis',     name:'Tenis',      emoji:'🎾', color:'#2e7d32',
-   coaches:[{id:'t1',name:'Metin',weight:2}], dailyRate:750},
-  {id:'jimnastik', name:'Jimnastik',  emoji:'🤸', color:'#6a1b9a',
-   coaches:[{id:'j1',name:'Ömer',weight:2}], dailyRate:750},
-  {id:'masatenisi',name:'Masa Tenisi',emoji:'🏓', color:'#e65100',
-   coaches:[{id:'m1',name:'Şahika Yurttaş',weight:2}], dailyRate:750},
-  {id:'zumba',     name:'Zumba',      emoji:'💃', color:'#880e4f',
-   coaches:[{id:'z1',name:'Şahika Yurttaş',weight:2}], dailyRate:750},
-  {id:'pilates',   name:'Pilates',    emoji:'🧘', color:'#004d40',
-   coaches:[{id:'p1',name:'Şahika Yurttaş',weight:2}], dailyRate:750},
-];
-
-function loadState(){
-  try{const s=localStorage.getItem(SK);return s?JSON.parse(s):null;}catch{return null;}
-}
-function saveState(s){localStorage.setItem(SK,JSON.stringify(s));}
-
-let S = loadState() || {branches:JSON.parse(JSON.stringify(DEFAULT_BRANCHES)), attendance:{}, income:{}};
-// eski veri yoksa varsayılanları ekle
-if(!S.branches) S.branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
-if(!S.attendance) S.attendance = {};
-if(!S.income) S.income = {};
-
-let curYear = new Date().getFullYear();
-let curMonth = new Date().getMonth()+1;
-
-// ── YARDIMCILAR ──
-function showLoad(t='Yükleniyor...'){document.getElementById('spinTxt').textContent=t;document.getElementById('loadingOverlay').classList.add('show')}
-function hideLoad(){document.getElementById('loadingOverlay').classList.remove('show')}
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
-function mkKey(y,m){return `${y}_${String(m).padStart(2,'0')}`;}
-function curKey(){return mkKey(curYear,curMonth);}
-function daysInMonth(y,m){return new Date(y,m,0).getDate();}
-
-// ── SEÇİCİLER ──
-function initSelects(){
-  const ySel=document.getElementById('selYear');
-  const mSel=document.getElementById('selMonth');
-  for(let y=2024;y<=2030;y++) ySel.innerHTML+=`<option value="${y}"${y===curYear?' selected':''}>${y}</option>`;
-  for(let m=1;m<=12;m++) mSel.innerHTML+=`<option value="${m}"${m===curMonth?' selected':''}>${MONTHS[m]}</option>`;
-}
-function changeDate(){
-  curYear=parseInt(document.getElementById('selYear').value);
-  curMonth=parseInt(document.getElementById('selMonth').value);
-  renderAll();
+function defState() {
+  return {
+    branches: [
+      {id:'yuzme',   name:'Yüzme',       color:'#0077b6', emoji:'🏊',
+       coaches:[{id:'y1',name:'Taha Yamaner',weight:2},{id:'y2',name:'Gizem Yerlikaya',weight:2},
+                {id:'y3',name:'Gözde Sömnez',weight:1},{id:'y4',name:'Enes Tezyaparlar',weight:1},
+                {id:'y5',name:'Eren Hüseyin Işık',weight:1},{id:'y6',name:'Emiralp Sakarya',weight:1}]},
+      {id:'basket',  name:'Basketbol',    color:'#c8102e', emoji:'🏀',
+       coaches:[{id:'b1',name:'Ahmet Hamdi Bayraktar',weight:2},{id:'b2',name:'Ada Cerrah',weight:1},
+                {id:'b3',name:'Boğaçhan Yıldırım',weight:1},{id:'b4',name:'Emiralp Sakarya',weight:1}]},
+      {id:'voley',   name:'Voleybol',     color:'#1a3a6e', emoji:'🏐',
+       coaches:[{id:'v1',name:'Gizem Yerlikaya',weight:2},{id:'v2',name:'Doğukan Bilici',weight:1},
+                {id:'v3',name:'Eylül Beste Zeren',weight:1}]},
+      {id:'tenis',   name:'Tenis',        color:'#2e7d32', emoji:'🎾',
+       coaches:[{id:'t1',name:'Metin Dut',weight:2},{id:'t2',name:'Furkan Bilir',weight:1},
+                {id:'t3',name:'Çağatay Ayyıldız',weight:1},{id:'t4',name:'Doğukan Bilici',weight:1},
+                {id:'t5',name:'Eylül Beste Zeren',weight:1}]},
+      {id:'masa',    name:'Masa Tenisi',  color:'#6a1b9a', emoji:'🏓',
+       coaches:[{id:'m1',name:'Şahika Yurttaş',weight:2}]},
+      {id:'pilates', name:'Pilates',      color:'#ad1457', emoji:'🧘',
+       coaches:[{id:'p1',name:'Şahika Yurttaş',weight:2},{id:'p2',name:'Nur Seda Ay',weight:1},
+                {id:'p3',name:'Özge Başar',weight:1},{id:'p4',name:'Eylül Beste Zeren',weight:1}]},
+      {id:'zumba',   name:'Zumba',        color:'#e65100', emoji:'💃',
+       coaches:[{id:'z1',name:'Şahika Yurttaş',weight:2}]},
+      {id:'jimnas',  name:'Jimnastik',    color:'#00695c', emoji:'🤸',
+       coaches:[{id:'j1',name:'Ömer Ozanalp',weight:2},{id:'j2',name:'Beyzagül Akgün',weight:1},
+                {id:'j3',name:'Cerem Karsak',weight:1},{id:'j4',name:'Ceren Bal',weight:1}]},
+    ],
+    attendance: {},
+    income: {}
+  };
 }
 
-// ── GELİR ──
-function getIncome(bid){return S.income?.[curKey()]?.[bid]||0;}
-function setIncome(bid,val){
-  if(!S.income[curKey()])S.income[curKey()]={};
-  S.income[curKey()][bid]=parseFloat(val)||0;
-  saveState(S);renderAll();
+let S = (() => { try { const s=localStorage.getItem(SK); return s?JSON.parse(s):defState(); } catch { return defState(); } })();
+function save() { localStorage.setItem(SK, JSON.stringify(S)); }
+
+// ============================================================
+// NAV
+// ============================================================
+let curTab = 'kurulum';
+const MONTHS = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const DAYS   = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+
+let attY = new Date().getFullYear(), attM = new Date().getMonth()+1;
+let rptY = new Date().getFullYear(), rptM = new Date().getMonth()+1;
+let curBid = S.branches[0]?.id || null;
+
+function goTab(t) {
+  curTab = t;
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['kurulum','yoklama','rapor'][i]===t));
+  document.querySelectorAll('.panel').forEach(el=>el.classList.remove('active'));
+  document.getElementById('p-'+t).classList.add('active');
+  if(t==='kurulum') renderSetup();
+  if(t==='yoklama') renderAtt();
+  if(t==='rapor')   renderRpt();
 }
 
-// ── HESAPLAMA ──
-function calcBranch(bid){
+// ============================================================
+// SETUP
+// ============================================================
+function renderSetup() {
+  const g = document.getElementById('setup-grid');
+  if(!S.branches.length){ g.innerHTML='<div class="empty"><div class="empty-ico">🗑️</div><p>Henüz branş eklenmedi.</p></div>'; return; }
+  g.innerHTML = S.branches.map(b=>`
+    <div class="bcard">
+      <div class="bcard-head" style="background:${b.color}">
+        <span>${b.emoji} ${b.name}</span>
+        <div style="display:flex;gap:.3rem">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.22);color:white" onclick="mAddCoach('${b.id}')">+ Antrenör</button>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.22);color:white" onclick="mEditBranch('${b.id}')">✏️</button>
+          <button class="btn btn-sm" style="background:rgba(0,0,0,.25);color:white" onclick="delBranch('${b.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="bcard-body">
+        ${b.coaches.length===0?'<div style="color:#aaa;font-size:.82rem;padding:.3rem 0">Antrenör eklenmemiş</div>':
+          b.coaches.map(c=>`
+          <div class="coach-row">
+            <span class="cn">${c.name}</span>
+            <span class="wbadge">x${c.weight}</span>
+            <button class="btn btn-sm" style="background:#f4f4f4;color:#555" onclick="mEditCoach('${b.id}','${c.id}')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="delCoach('${b.id}','${c.id}')">✕</button>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function mAddBranch() {
+  showM(`<h3>Yeni Branş</h3>
+    <div class="mfield"><label>Branş Adı</label><input id="mb-n" placeholder="örn: Yüzme"></div>
+    <div class="mfield"><label>Emoji</label><input id="mb-e" placeholder="örn: 🏊" maxlength="4"></div>
+    <div class="mfield"><label>Renk</label><input id="mb-c" type="color" value="#1a3a6e" style="height:40px;width:100%;border:none;cursor:pointer;border-radius:8px"></div>
+    <div class="mbtns"><button class="btn btn-outline" onclick="hideM()">İptal</button><button class="btn btn-primary" onclick="addBranch()">Ekle</button></div>`);
+}
+function addBranch() {
+  const n=document.getElementById('mb-n').value.trim();
+  if(!n){alert('Branş adı girin!');return;}
+  S.branches.push({id:'br'+Date.now(),name:n,emoji:document.getElementById('mb-e').value.trim()||'🏅',color:document.getElementById('mb-c').value,coaches:[]});
+  save();hideM();renderSetup();
+}
+function mEditBranch(bid) {
+  const b=S.branches.find(x=>x.id===bid);if(!b)return;
+  showM(`<h3>Branş Düzenle</h3>
+    <div class="mfield"><label>Branş Adı</label><input id="mb-n" value="${b.name}"></div>
+    <div class="mfield"><label>Emoji</label><input id="mb-e" value="${b.emoji}" maxlength="4"></div>
+    <div class="mfield"><label>Renk</label><input id="mb-c" type="color" value="${b.color}" style="height:40px;width:100%;border:none;cursor:pointer;border-radius:8px"></div>
+    <div class="mbtns"><button class="btn btn-outline" onclick="hideM()">İptal</button><button class="btn btn-primary" onclick="saveBranch('${bid}')">Kaydet</button></div>`);
+}
+function saveBranch(bid) {
+  const b=S.branches.find(x=>x.id===bid);if(!b)return;
+  b.name=document.getElementById('mb-n').value.trim()||b.name;
+  b.emoji=document.getElementById('mb-e').value.trim()||b.emoji;
+  b.color=document.getElementById('mb-c').value;
+  save();hideM();renderSetup();
+}
+function delBranch(bid) {
+  if(!confirm('Bu branşı ve tüm yoklama verilerini silmek istediğinize emin misiniz?'))return;
+  S.branches=S.branches.filter(b=>b.id!==bid);
+  save();renderSetup();
+}
+
+function mAddCoach(bid) {
+  showM(`<h3>Antrenör Ekle</h3>
+    <div class="mfield"><label>Ad Soyad</label><input id="mc-n" placeholder="Adı Soyadı"></div>
+    <div class="mfield"><label>Kıdem Katsayısı <span style="color:#888;font-weight:400">(Baş→2, Antrenör→1)</span></label>
+      <input id="mc-w" type="number" min="0.5" max="20" step="0.5" value="1" style="width:120px"></div>
+    <div class="mbtns"><button class="btn btn-outline" onclick="hideM()">İptal</button><button class="btn btn-primary" onclick="addCoach('${bid}')">Ekle</button></div>`);
+}
+function addCoach(bid) {
+  const n=document.getElementById('mc-n').value.trim();
+  if(!n){alert('İsim girin!');return;}
+  const b=S.branches.find(x=>x.id===bid);if(!b)return;
+  b.coaches.push({id:'c'+Date.now(),name:n,weight:parseFloat(document.getElementById('mc-w').value)||1});
+  save();hideM();renderSetup();
+}
+function mEditCoach(bid,cid) {
   const b=S.branches.find(x=>x.id===bid);
-  if(!b)return{income:0,coachPay:0,clubPay:0,totalDays:0,coaches:[]};
-  const key=curKey();
-  const inc=getIncome(bid);
-  const pool=inc*0.5;
-  const totalW=b.coaches.reduce((s,c)=>s+(c.weight||1),0)||1;
-
-  const coaches=b.coaches.map(c=>{
-    const days=(S.attendance?.[key]?.[bid]?.[c.id]||[]).length;
-    const ws=days*(c.weight||1);
-    return{...c,days,ws};
-  });
-  const totWs=coaches.reduce((s,c)=>s+c.ws,0);
-  const coachesWithPay=coaches.map(c=>({...c,pay:totWs>0?pool*c.ws/totWs:0}));
-  const totalDays=coaches.reduce((s,c)=>s+c.days,0);
-  const coachPay=coachesWithPay.reduce((s,c)=>s+c.pay,0);
-  return{income:inc,coachPay,clubPay:inc-coachPay,totalDays,coaches:coachesWithPay,branch:b};
+  const c=b?.coaches.find(x=>x.id===cid);if(!c)return;
+  showM(`<h3>Antrenör Düzenle</h3>
+    <div class="mfield"><label>Ad Soyad</label><input id="mc-n" value="${c.name}"></div>
+    <div class="mfield"><label>Kıdem Katsayısı</label>
+      <input id="mc-w" type="number" min="0.5" max="20" step="0.5" value="${c.weight}" style="width:120px"></div>
+    <div class="mbtns"><button class="btn btn-outline" onclick="hideM()">İptal</button><button class="btn btn-primary" onclick="saveCoach('${bid}','${cid}')">Kaydet</button></div>`);
+}
+function saveCoach(bid,cid) {
+  const b=S.branches.find(x=>x.id===bid);
+  const c=b?.coaches.find(x=>x.id===cid);if(!c)return;
+  c.name=document.getElementById('mc-n').value.trim()||c.name;
+  c.weight=parseFloat(document.getElementById('mc-w').value)||c.weight;
+  save();hideM();renderSetup();
+}
+function delCoach(bid,cid) {
+  if(!confirm('Bu antrenörü silmek istediğinize emin misiniz?'))return;
+  const b=S.branches.find(x=>x.id===bid);if(!b)return;
+  b.coaches=b.coaches.filter(c=>c.id!==cid);
+  save();renderSetup();
 }
 
-// ── RENDER HEPSİ ──
-function renderAll(){
-  document.getElementById('dashPeriod').textContent=`${MONTHS[curMonth]} ${curYear}`;
-  renderDashboard();
-  renderYoklama();
-  renderRapor();
-  renderAntrenorler();
+// ============================================================
+// ATTENDANCE
+// ============================================================
+function attKey()  { return `${attY}-${String(attM).padStart(2,'0')}`; }
+function daysInM(y,m) { return new Date(y,m,0).getDate(); }
+function dow(y,m,d)   { return new Date(y,m-1,d).getDay(); }
+
+function mvMonth(d) { attM+=d; if(attM>12){attM=1;attY++;} if(attM<1){attM=12;attY--;} renderAtt(); }
+
+function toggleAtt(bid,cid,day) {
+  const mk=attKey();
+  if(!S.attendance[mk])S.attendance[mk]={};
+  if(!S.attendance[mk][bid])S.attendance[mk][bid]={};
+  if(!S.attendance[mk][bid][cid])S.attendance[mk][bid][cid]=[];
+  const arr=S.attendance[mk][bid][cid];
+  const i=arr.indexOf(day);
+  if(i>=0)arr.splice(i,1); else arr.push(day);
+  save();
+  renderAttGrid();
 }
 
-// ── DASHBOARD ──
-function renderDashboard(){
-  const bids=S.branches.map(b=>b.id);
-  let totalIncome=0,totalCoachPay=0,totalClubPay=0,activeBranches=0;
-  bids.forEach(bid=>{
-    const r=calcBranch(bid);
-    totalIncome+=r.income;totalCoachPay+=r.coachPay;totalClubPay+=r.clubPay;
-    if(r.totalDays>0)activeBranches++;
+function renderAtt() {
+  document.getElementById('att-month-lbl').textContent=`${MONTHS[attM-1]} ${attY}`;
+  const tabs=document.getElementById('att-btabs');
+  tabs.innerHTML=S.branches.map(b=>`
+    <span class="btab${b.id===curBid?' sel':''}" style="background:${b.color}" onclick="selBranch('${b.id}')">${b.emoji} ${b.name}</span>`).join('');
+  renderAttGrid();
+}
+function selBranch(bid){curBid=bid;renderAtt();}
+
+function renderAttGrid() {
+  const wrap=document.getElementById('att-wrap');
+  const b=S.branches.find(x=>x.id===curBid);
+  if(!b){wrap.innerHTML='<div class="empty"><div class="empty-ico">🏷️</div><p>Branş seçin.</p></div>';return;}
+  if(!b.coaches.length){wrap.innerHTML='<div class="empty"><div class="empty-ico">🤷</div><p>Bu branşa antrenör eklenmemiş.</p></div>';return;}
+
+  const days=daysInM(attY,attM);
+  const mk=attKey();
+
+  let h=`<table class="att-table"><thead><tr>
+    <th class="cc">Antrenör</th><th class="kc">Kat.</th>`;
+  for(let d=1;d<=days;d++){
+    const w=dow(attY,attM,d);
+    const we=w===0||w===6;
+    h+=`<th class="${we?'we-hd':''}" title="${DAYS[w]}">${d}<br><span style="font-size:.6rem;opacity:.75">${DAYS[w].slice(0,2)}</span></th>`;
+  }
+  h+=`<th>Toplam</th></tr></thead><tbody>`;
+
+  b.coaches.forEach(c=>{
+    const att=S.attendance?.[mk]?.[b.id]?.[c.id]||[];
+    const tot=att.length;
+    h+=`<tr><td class="coach-cell">${c.name}</td><td class="wt-cell">x${c.weight}</td>`;
+    for(let d=1;d<=days;d++){
+      const w=dow(attY,attM,d);
+      const we=w===0||w===6;
+      const ok=att.includes(d);
+      h+=`<td style="padding:2px"><div class="att-cell${ok?' ok':''}${we?' we':''}" onclick="toggleAtt('${b.id}','${c.id}',${d})" title="${c.name} · ${d} ${MONTHS[attM-1]}">${ok?'✓':''}</div></td>`;
+    }
+    h+=`<td class="tot-cell">${tot} gün</td></tr>`;
   });
-  document.getElementById('dashStats').innerHTML=`
-    <div class="stat-card"><div class="slbl">Toplam Gelir</div><div class="sval">₺${Math.round(totalIncome).toLocaleString('tr')}</div><div class="ssub">Tüm branşlar</div></div>
-    <div class="stat-card" style="border-color:#22c55e"><div class="slbl">Antrenör Havuzu</div><div class="sval">₺${Math.round(totalCoachPay).toLocaleString('tr')}</div><div class="ssub">Ödenecek toplam</div></div>
-    <div class="stat-card" style="border-color:#06b6d4"><div class="slbl">Kulüp Payı</div><div class="sval">₺${Math.round(totalClubPay).toLocaleString('tr')}</div><div class="ssub">Kulüp geliri</div></div>
-    <div class="stat-card" style="border-color:#8b5cf6"><div class="slbl">Aktif Branş</div><div class="sval">${activeBranches}/${bids.length}</div><div class="ssub">Bu ay</div></div>
-  `;
-  let html='';
-  S.branches.forEach(b=>{
-    const r=calcBranch(b.id);
-    html+=`<div class="bcard-mini" style="border-top-color:${b.color}">
-      <div class="bname"><span>${b.emoji}</span>${b.name}</div>
-      <div class="binfo-grid">
-        <div class="binfo-item"><div class="lbl">Toplam Gün</div><div class="val">${r.totalDays} gün</div></div>
-        <div class="binfo-item"><div class="lbl">Antrenör Payı</div><div class="val">₺${Math.round(r.coachPay).toLocaleString('tr')}</div></div>
-        <div class="binfo-item"><div class="lbl">Gelir</div><div class="val">₺${r.income.toLocaleString('tr')}</div></div>
-        <div class="binfo-item"><div class="lbl">Kulüp Payı</div><div class="val">₺${Math.round(r.clubPay).toLocaleString('tr')}</div></div>
+
+  h+=`</tbody></table>`;
+  wrap.innerHTML=h;
+}
+
+// ============================================================
+// REPORT
+// ============================================================
+function mvRptMonth(d) { rptM+=d; if(rptM>12){rptM=1;rptY++;} if(rptM<1){rptM=12;rptY--;} renderRpt(); }
+function rptKey() { return `${rptY}-${String(rptM).padStart(2,'0')}`; }
+function getInc(bid) { return S.income?.[rptKey()]?.[bid]||0; }
+function setInc(bid,val) {
+  const mk=rptKey();
+  if(!S.income[mk])S.income[mk]={};
+  S.income[mk][bid]=parseFloat(val)||0;
+  save();renderRpt();
+}
+
+function renderRpt() {
+  document.getElementById('rpt-month-lbl').textContent=`${MONTHS[rptM-1]} ${rptY}`;
+  const mk=rptKey();
+  const g=document.getElementById('rpt-grid');
+  g.innerHTML=S.branches.map(b=>{
+    const inc=getInc(b.id);
+    const pool=inc*0.5;
+    const club=inc*0.5;
+    const data=b.coaches.map(c=>{
+      const days=(S.attendance?.[mk]?.[b.id]?.[c.id]||[]).length;
+      return{...c,days,ws:days*c.weight};
+    });
+    const totWs=data.reduce((s,c)=>s+c.ws,0);
+    const rows=data.map(c=>({...c,pay:totWs>0?pool*c.ws/totWs:0}));
+    const totDays=data.reduce((s,c)=>s+c.days,0);
+    const totPay=rows.reduce((s,c)=>s+c.pay,0);
+
+    return `<div class="bcard">
+      <div class="bcard-head" style="background:${b.color}">
+        <span>${b.emoji} ${b.name}</span>
+        <span style="font-size:.78rem;opacity:.8">${MONTHS[rptM-1]} ${rptY}</span>
+      </div>
+      <div class="bcard-body">
+        <div class="inc-row">
+          <label>💰 Aylık Gelir (₺):</label>
+          <input type="number" min="0" step="100" value="${inc||''}" placeholder="0"
+                 onchange="setInc('${b.id}',this.value)">
+        </div>
+        ${inc>0?`<div class="sum-bar">
+          <div class="sum-box"><div class="slbl">Kulüp Payı (%50)</div><div class="sval" style="color:#1a3a6e">${fmt(club)} ₺</div></div>
+          <div class="sum-box"><div class="slbl">Antrenör Havuzu (%50)</div><div class="sval" style="color:#38a169">${fmt(pool)} ₺</div></div>
+        </div>`:''}
+        <table class="rpt-table">
+          <thead><tr>
+            <th>Antrenör</th><th>Kat.</th><th>Gün</th>
+            ${inc>0?'<th>Ağır. Puan</th><th>Ödeme (₺)</th>':''}
+          </tr></thead>
+          <tbody>
+          ${rows.map(c=>`<tr>
+            <td>${c.name}</td>
+            <td><span class="wbadge" style="background:#e8f0fe">x${c.weight}</span></td>
+            <td class="${c.days===0?'zero':''}">${c.days}</td>
+            ${inc>0?`<td>${c.ws.toFixed(1)}</td><td class="${c.days===0?'zero':'pay'}">${c.days===0?'–':fmt(c.pay)+' ₺'}</td>`:''}
+          </tr>`).join('')}
+          ${inc>0?`<tr class="tot-row">
+            <td colspan="2">TOPLAM</td>
+            <td>${totDays}</td>
+            <td>${totWs.toFixed(1)}</td>
+            <td class="pay">${fmt(totPay)} ₺</td>
+          </tr>`:''}
+          </tbody>
+        </table>
+        ${b.coaches.length===0?'<div style="text-align:center;color:#aaa;font-size:.8rem;padding:.5rem">Antrenör yok</div>':''}
       </div>
     </div>`;
-  });
-  document.getElementById('dashCards').innerHTML=html;
+  }).join('');
 }
 
-// ── YOKLAMA ──
-function renderYoklama(){
-  const key=curKey();
-  const days=daysInMonth(curYear,curMonth);
-  let html='';
-  S.branches.forEach(b=>{
-    html+=`<div class="branch-section">
-      <div class="bsec-head"><span class="emoji">${b.emoji}</span><span class="bname">${b.name}</span></div>`;
-    b.coaches.forEach(c=>{
-      const att=S.attendance?.[key]?.[b.id]?.[c.id]||[];
-      html+=`<div class="coach-block">
-        <div class="coach-lbl">${c.name} <span class="days-count">(${att.length} gün)</span></div>
-        <div class="day-grid">`;
-      for(let d=1;d<=days;d++){
-        html+=`<button class="day-btn${att.includes(d)?' on':''}" onclick="toggleDay('${b.id}','${c.id}',${d},this)">${d}</button>`;
-      }
-      html+=`</div></div>`;
-    });
-    html+=`</div>`;
-  });
-  document.getElementById('yoklamaContent').innerHTML=html;
+function fmt(n) {
+  return n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
-function toggleDay(bid,cid,day,btn){
-  const key=curKey();
-  if(!S.attendance[key])S.attendance[key]={};
-  if(!S.attendance[key][bid])S.attendance[key][bid]={};
-  if(!S.attendance[key][bid][cid])S.attendance[key][bid][cid]=[];
-  const arr=S.attendance[key][bid][cid];
-  const i=arr.indexOf(day);
-  if(i>=0){arr.splice(i,1);btn.classList.remove('on');}
-  else{arr.push(day);arr.sort((a,b)=>a-b);btn.classList.add('on');}
-  saveState(S);
-  renderDashboard();renderRapor();renderAntrenorler();
+// ============================================================
+// MODAL
+// ============================================================
+function showM(html) {
+  document.getElementById('mbox').innerHTML=html;
+  document.getElementById('overlay').classList.add('show');
 }
+function hideM() { document.getElementById('overlay').classList.remove('show'); }
 
-function markAll(val){
-  const key=curKey();
-  const days=daysInMonth(curYear,curMonth);
-  S.branches.forEach(b=>{
-    if(!S.attendance[key])S.attendance[key]={};
-    if(!S.attendance[key][b.id])S.attendance[key][b.id]={};
-    b.coaches.forEach(c=>{
-      S.attendance[key][b.id][c.id]=val?Array.from({length:days},(_,i)=>i+1):[];
-    });
-  });
-  saveState(S);renderAll();
-}
-
-function resetMonth(){
-  if(!confirm(`${MONTHS[curMonth]} ${curYear} yoklamasını sıfırlamak istediğinize emin misiniz?`))return;
-  delete S.attendance[curKey()];
-  saveState(S);renderAll();toast('🗑 Yoklama sıfırlandı');
-}
-
-// ── RAPOR ──
-function renderRapor(){
-  let html='';
-  S.branches.forEach(b=>{
-    const r=calcBranch(b.id);
-    const inc=r.income;
-    html+=`<div style="margin-bottom:2rem">
-      <div class="inc-bar">
-        <div class="inc-bar-inner">
-          <label>${b.emoji} ${b.name} — Aylık Gelir (₺):</label>
-          <input type="number" min="0" step="100" value="${inc||''}" placeholder="Gelir girin..."
-                 onchange="setIncome('${b.id}',this.value)">
-        </div>
-        ${inc>0?`<div class="inc-summary">
-          <span><span class="lbl">Kulüp Payı (%50):</span> ₺${Math.round(r.clubPay).toLocaleString('tr')}</span>
-          <span><span class="lbl">Antrenör Havuzu (%50):</span> ₺${Math.round(r.coachPay).toLocaleString('tr')}</span>
-        </div>`:''}
-      </div>
-      <table class="rpt-table">
-        <thead><tr>
-          <th>Branş</th><th>Antrenör</th><th>Katsayı</th><th>Gün</th>
-          ${inc>0?'<th>Ağır. Puan</th><th>Ödeme (₺)</th>':'<th>Durum</th>'}
-        </tr></thead>
-        <tbody>`;
-    r.coaches.forEach(c=>{
-      html+=`<tr>
-        <td><span class="branch-badge" style="background:${b.color}20;color:${b.color}">${b.emoji} ${b.name}</span></td>
-        <td>${c.name}</td>
-        <td>x${c.weight}</td>
-        <td>${c.days}</td>
-        ${inc>0?`<td>${c.ws.toFixed(1)}</td><td class="pay-cell">₺${Math.round(c.pay).toLocaleString('tr')}</td>`
-               :`<td style="color:#888;font-size:.8rem">Gelir girilmedi</td>`}
-      </tr>`;
-    });
-    if(inc>0&&r.coaches.length>1){
-      html+=`<tr style="background:#f8f9fa;font-weight:800">
-        <td colspan="3">TOPLAM</td>
-        <td>${r.totalDays}</td>
-        <td>${r.coaches.reduce((s,c)=>s+c.ws,0).toFixed(1)}</td>
-        <td class="pay-cell">₺${Math.round(r.coachPay).toLocaleString('tr')}</td>
-      </tr>`;
-    }
-    html+=`</tbody></table></div>`;
-  });
-  document.getElementById('raporContent').innerHTML=html;
-}
-
-// ── ANTRENÖR ÖZETİ ──
-function renderAntrenorler(){
-  const map={};
-  S.branches.forEach(b=>{
-    const r=calcBranch(b.id);
-    r.coaches.forEach(c=>{
-      if(!map[c.name])map[c.name]={name:c.name,branches:[],totalDays:0,totalPay:0};
-      map[c.name].totalDays+=c.days;
-      map[c.name].totalPay+=c.pay;
-      map[c.name].branches.push({name:b.name,emoji:b.emoji,color:b.color,days:c.days});
-    });
-  });
-  const coaches=Object.values(map).sort((a,b)=>b.totalDays-a.totalDays);
-  let html=`<table class="coach-table"><thead><tr>
-    <th>Antrenör</th><th>Branşlar</th><th>Toplam Gün</th><th>Toplam Ödeme</th>
-  </tr></thead><tbody>`;
-  coaches.forEach(c=>{
-    html+=`<tr>
-      <td style="font-weight:700">${c.name}</td>
-      <td>${c.branches.map(b=>`<span class="branch-badge" style="background:${b.color}20;color:${b.color};margin:.1rem">${b.emoji} ${b.name} (${b.days}g)</span>`).join('')}</td>
-      <td style="font-weight:700">${c.totalDays}</td>
-      <td style="font-weight:800;color:#16a34a">₺${Math.round(c.totalPay).toLocaleString('tr')}</td>
-    </tr>`;
-  });
-  html+=`</tbody></table>`;
-  document.getElementById('antrenorContent').innerHTML=html;
-}
-
-// ── TABS ──
-function showTab(btn,name){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-}
-
-// ── CSV ──
-function exportCSV(){
-  let csv='Branş,Antrenör,Katsayı,Gün,Ağırlıklı Puan,Ödeme (₺)\n';
-  S.branches.forEach(b=>{
-    const r=calcBranch(b.id);
-    r.coaches.forEach(c=>{
-      csv+=`${b.name},${c.name},${c.weight},${c.days},${c.ws.toFixed(1)},${Math.round(c.pay)}\n`;
-    });
-  });
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv,{type:'text/csv;charset=utf-8;'}]));
-  a.download=`DPUSK_Rapor_${curYear}_${curMonth}.csv`;a.click();
-}
-
-// ── BAŞLAT ──
-initSelects();
-hideLoad();
-renderAll();
+// ============================================================
+// INIT
+// ============================================================
+if(!curBid&&S.branches.length) curBid=S.branches[0].id;
+renderSetup();
 </script>
 </body>
 </html>
